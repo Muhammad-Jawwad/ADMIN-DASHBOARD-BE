@@ -1,0 +1,495 @@
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'dotenv'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/app.js:1:1)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'dotenv'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/app.js:1:1)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+internal/modules/cjs/loader.js:638
+    throw err;
+    ^
+
+Error: Cannot find module 'multer'
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:562:25)
+    at Module.require (internal/modules/cjs/loader.js:692:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at Object.<anonymous> (/home/workmwmf/node.workgenix.live/util/multer.js:1:16)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuiz (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:335:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:191:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuiz (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:335:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:191:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuiz (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:335:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:191:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuiz (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:335:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:191:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuiz (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:335:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:191:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuiz (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:335:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:191:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuestion (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:439:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:267:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuestion (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:439:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:267:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuestion (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:439:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:267:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuestion (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:439:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:267:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
+/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/Parser.js:437
+      throw err; // Rethrow non-MySQL errors
+      ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at ServerResponse.setHeader (_http_outgoing.js:470:11)
+    at ServerResponse.header (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/express/lib/response.js:278:15)
+    at createQuestion (/home/workmwmf/node.workgenix.live/api/admin/admin.controller.js:439:18)
+    at Query.pool.query (/home/workmwmf/node.workgenix.live/api/admin/admin.service.js:267:24)
+    at Query.<anonymous> (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:526:10)
+    at Query._callback (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/Connection.js:488:16)
+    at Query.Sequence.end (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Sequence.js:83:24)
+    at Query.ErrorPacket (/home/workmwmf/nodevenv/node.workgenix.live/10/lib/node_modules/mysql/lib/protocol/sequences/Query.js:92:8)
