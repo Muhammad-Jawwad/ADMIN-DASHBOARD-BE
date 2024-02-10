@@ -1,5 +1,6 @@
 const { query } = require("express");
 const pool = require("../../config/database");
+const config = require("../../config/config");
 
 module.exports = {
 
@@ -319,8 +320,8 @@ module.exports = {
     createQuestion: (data, callBack) => {
     console.log(data);
         pool.query(
-            `insert into quiz_questions(quiz_id,question,option_1,option_2,option_3,option_4,correct_option) 
-              values(?,?,?,?,?,?,?)`,
+            `insert into quiz_questions(quiz_id,question,option_1,option_2,option_3,option_4,correct_option,image_question,image_option_1,image_option_2,image_option_3,image_option_4,image_correct_option)
+              values(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
             [
                 data.quiz_id,
                 data.question,
@@ -328,7 +329,13 @@ module.exports = {
                 data.option_2,
                 data.option_3,
                 data.option_4,
-                data.correct_option
+                data.correct_option,
+                data.image_question,
+                data.image_option_1,
+                data.image_option_2,
+                data.image_option_3,
+                data.image_option_4,
+                data.image_correct_option
             ],
             (error, results, fields) => {
                 if (error) {
@@ -337,6 +344,11 @@ module.exports = {
                 return callBack(null, results);
             }
         );
+    },
+
+    getQuestionsImageUrl: (imageName) => {
+        const baseUrl = `${config.url}uploads/questionImages/`;
+        return `${baseUrl}${imageName}`;
     },
 
     getQuestion: (callBack) => {
@@ -370,7 +382,7 @@ module.exports = {
     updateQuestion: (data, callBack) => {
         // console.log(data);
         pool.query(
-            `update quiz_questions set quiz_id=?, question=?, option_1=?, option_2=?, option_3=?, option_4=?, correct_option=?, status=? where id = ?`,
+            `update quiz_questions set quiz_id=?, question=?, option_1=?, option_2=?, option_3=?, option_4=?, correct_option=?, image_question=?, image_option_1=?, image_option_2=?, image_option_3=?, image_option_4=?, image_correct_option=?, status=? where id = ?`,
             [
                 data.quiz_id,
                 data.question,
@@ -379,6 +391,12 @@ module.exports = {
                 data.option_3,
                 data.option_4,
                 data.correct_option,
+                data.image_question,
+                data.image_option_1,
+                data.image_option_2,
+                data.image_option_3,
+                data.image_option_4,
+                data.image_correct_option,
                 data.status,
                 data.question_id
             ],

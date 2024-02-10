@@ -28,16 +28,18 @@ const {
   graphStatsByTypeAll,
   graphStatsByType,
   createUser,
-  updateUser
+  updateUser,
+  getQuestionsImageUrl
 } = require("./admin.service");
-const { 
-  hashSync, 
-  genSaltSync, 
-  compareSync 
+const {
+  hashSync,
+  genSaltSync,
+  compareSync
 } = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const XLSX = require('xlsx');
-  
+const config = require("../../config/config");
+
 module.exports = {
 
   //#region : STUDENT DATA FOR ADMINS
@@ -54,7 +56,7 @@ module.exports = {
      */
     try {
       const body = req.body;
-      console.log("API Called",body);
+      console.log("API Called", body);
       const salt = genSaltSync(10);
       body.password = hashSync(body.password, salt);
       const results = await new Promise((resolve, reject) => {
@@ -143,8 +145,8 @@ module.exports = {
     }
   },
 
-  getRegisteredStudents: async (req,res) => {
-    try{
+  getRegisteredStudents: async (req, res) => {
+    try {
       const results = await new Promise((resolve, reject) => {
         getRegisteredStudents((err, results) => {
           if (err) {
@@ -180,8 +182,8 @@ module.exports = {
     }
   },
 
-  getStudentById: async (req,res) => {
-    try{
+  getStudentById: async (req, res) => {
+    try {
       const user_id = req.params.id;
       const results = await new Promise((resolve, reject) => {
         getStudentById(user_id, (err, results) => {
@@ -232,7 +234,7 @@ module.exports = {
      * gender
      * type
      */
-    try{
+    try {
       const body = req.body;
       const salt = genSaltSync(10);
       body.password = hashSync(body.password, salt);
@@ -277,7 +279,7 @@ module.exports = {
      * email_id
      * password
     */
-    try{
+    try {
       const body = req.body;
       const results = await new Promise((resolve, reject) => {
         getAdminByAdminEmail(body.email_id, (err, results) => {
@@ -299,16 +301,16 @@ module.exports = {
       const result = compareSync(body.password, results.password);
       if (result) {
         results.password = undefined;
-        const jsontoken = jwt.sign({ 
+        const jsontoken = jwt.sign({
           id: results.id,
           email_id: results.email_id,
           type: results.type,
           role: "Admin"
-        }, 
-        "admin1234",
-        {
-          expiresIn: "3h"
-        });
+        },
+          "admin1234",
+          {
+            expiresIn: "3h"
+          });
         return res.json({
           code: 200,
           status: true,
@@ -347,7 +349,7 @@ module.exports = {
      * name
      * type ('ECAT','MCAT','ET','Admin')
      */
-    try{
+    try {
       const body = req.body;
       console.log(body);
       const salt = genSaltSync(10);
@@ -400,7 +402,7 @@ module.exports = {
      * no_of_quiz
      * type
      */
-    try{
+    try {
       const body = req.body;
       const results = await new Promise((resolve, reject) => {
         createCategory(body, (err, results) => {
@@ -411,7 +413,7 @@ module.exports = {
           }
         });
       });
-      if(results.length === 0){
+      if (results.length === 0) {
         return res.json({
           code: 400,
           status: false,
@@ -438,7 +440,7 @@ module.exports = {
   },
 
   getCategory: async (req, res) => {
-    try{
+    try {
       const results = await new Promise((resolve, reject) => {
         getCategory((err, results) => {
           if (err) {
@@ -475,7 +477,7 @@ module.exports = {
   },
 
   getCategoryById: async (req, res) => {
-    try{
+    try {
       const category_id = req.params.id;
       const results = await new Promise((resolve, reject) => {
         getCategoryById(category_id, (err, results) => {
@@ -513,16 +515,16 @@ module.exports = {
   },
 
   updateCategory: async (req, res) => {
-  /**
-    Body Require:
-     * catagory_id
-     * category_name
-     * category_picture
-     * no_of_quiz
-     * type
-     * status
-     */
-    try{
+    /**
+      Body Require:
+       * catagory_id
+       * category_name
+       * category_picture
+       * no_of_quiz
+       * type
+       * status
+       */
+    try {
       const body = req.body;
       const results = await new Promise((resolve, reject) => {
         updateCategory(body, (err, results) => {
@@ -564,7 +566,7 @@ module.exports = {
      Body Require:
      * category_name
      */
-    try{
+    try {
       const body = req.body
       const name = body.category_name;
       const results = await new Promise((resolve, reject) => {
@@ -618,7 +620,7 @@ module.exports = {
      * description
      * duration
      */
-    try{
+    try {
       const body = req.body;
       const results = await new Promise((resolve, reject) => {
         createQuiz(body, (err, results) => {
@@ -654,8 +656,8 @@ module.exports = {
     }
   },
 
-  getQuiz: async (req,res) => {
-    try{
+  getQuiz: async (req, res) => {
+    try {
       const results = await new Promise((resolve, reject) => {
         getQuiz((err, results) => {
           if (err) {
@@ -691,8 +693,8 @@ module.exports = {
     }
   },
 
-  getQuizById: async (req,res) => {
-    try{
+  getQuizById: async (req, res) => {
+    try {
       const quiz_id = req.params.id;
       const results = await new Promise((resolve, reject) => {
         getQuizById(quiz_id, (err, results) => {
@@ -729,21 +731,21 @@ module.exports = {
     }
   },
 
-  updateQuiz: async (req,res) => {
-  /**
-    Body Require:
-     * quiz_id
-     * category_id
-     * quiz_no
-     * picture
-     * quiz_name
-     * no_of_questions
-     * description
-     * duration
-     * no_of_attempts
-     * status
-     */
-    try{
+  updateQuiz: async (req, res) => {
+    /**
+      Body Require:
+       * quiz_id
+       * category_id
+       * quiz_no
+       * picture
+       * quiz_name
+       * no_of_questions
+       * description
+       * duration
+       * no_of_attempts
+       * status
+       */
+    try {
       const body = req.body;
       console.log(body);
       const results = await new Promise((resolve, reject) => {
@@ -784,10 +786,10 @@ module.exports = {
   },
 
   //#endregion
-  
+
   //#region : QUESTION CRUD
 
-  createQuestion: async (req,res) => {
+  createQuestion: async (req, res) => {
     /**
      Body Require:
       * quiz_id
@@ -804,9 +806,27 @@ module.exports = {
       * image_option_4
       * image_correct_option
       */
-    try{
+    try {
       const body = req.body;
       console.log("body", body);
+
+      // For images handling
+      const images = Object.values(req.files); // Extract files from req.files object
+      console.log("images", images);
+
+      // Get unique filenames and store them in an array
+      const imageFilenames = images.map(image => image[0].filename); // Assuming each field has one file
+
+      // Add imageFilenames to the data to be saved in the database
+      body.image_question = imageFilenames[0]; // Or any other logic for assigning images
+      body.image_option_1 = imageFilenames[1];
+      body.image_option_2 = imageFilenames[2];
+      body.image_option_3 = imageFilenames[3];
+      body.image_option_4 = imageFilenames[4];
+      body.image_correct_option = imageFilenames[5];
+
+      console.log("image_question", body.image_question);
+
       const results = await new Promise((resolve, reject) => {
         createQuestion(body, (err, results) => {
           if (err) {
@@ -842,7 +862,7 @@ module.exports = {
     }
   },
 
-  getQuestion: async (req,res) => {
+  getQuestion: async (req, res) => {
     try {
       const results = await new Promise((resolve, reject) => {
         getQuestion((err, results) => {
@@ -853,6 +873,7 @@ module.exports = {
           }
         });
       });
+
       if (results.length === 0) {
         return res.json({
           code: 400,
@@ -861,11 +882,38 @@ module.exports = {
           data: []
         });
       }
+
+      // Function to get image URL for a field if it exists
+      const getImageUrl = (question, field) => {
+        if (question[field]) {
+          return getQuestionsImageUrl(question[field]);
+        }
+        return null;
+      };
+
+      // Add the image URL to each relevant field in the questions
+      const questionsWithImage = results.map((question) => {
+        const imageFields = [
+          'image_question',
+          'image_option_1',
+          'image_option_2',
+          'image_option_3',
+          'image_option_4',
+          'image_correct_option'
+        ];
+
+        const updatedQuestion = { ...question };
+        imageFields.forEach((field) => {
+          updatedQuestion[field] = getImageUrl(question, field);
+        });
+        return updatedQuestion;
+      });
+
       return res.json({
         code: 200,
         status: true,
         message: "Data found",
-        data: results
+        data: questionsWithImage
       });
     } catch (error) {
       console.log(error);
@@ -879,12 +927,12 @@ module.exports = {
     }
   },
 
-  getQuestionById: async (req,res) => {
+  getQuestionById: async (req, res) => {
     /**
      Body Require:
      * question_id
      */
-    try{
+    try {
       const question_id = req.params.id;
       const results = await new Promise((resolve, reject) => {
         getQuestionById(question_id, (err, results) => {
@@ -903,11 +951,36 @@ module.exports = {
           data: []
         });
       }
+      // Function to get image URL for a field if it exists
+      const getImageUrl = (question, field) => {
+        if (question[field]) {
+          return getQuestionsImageUrl(question[field]);
+        }
+        return null;
+      };
+
+      // Add the image URL to each relevant field in the questions
+      const questionsWithImage = results.map((question) => {
+        const imageFields = [
+          'image_question',
+          'image_option_1',
+          'image_option_2',
+          'image_option_3',
+          'image_option_4',
+          'image_correct_option'
+        ];
+
+        const updatedQuestion = { ...question };
+        imageFields.forEach((field) => {
+          updatedQuestion[field] = getImageUrl(question, field);
+        });
+        return updatedQuestion;
+      });
       return res.json({
         code: 200,
         status: true,
         message: "Data found",
-        data: results
+        data: questionsWithImage
       });
     } catch (error) {
       console.log(error);
@@ -921,7 +994,7 @@ module.exports = {
     }
   },
 
-  updateQuestion: async (req,res) => {
+  updateQuestion: async (req, res) => {
     /**
    Body Require:
     * quiz_id
@@ -932,10 +1005,33 @@ module.exports = {
     * option_3
     * option_4
     * correct_option
+    * image_question
+    * image_option_1
+    * image_option_2
+    * image_option_3
+    * image_option_4
+    * image_correct_option
     */
-   try{
+    try {
       const body = req.body;
-      console.log(body);
+      console.log("body", body);
+
+      // For images handling
+      const images = Object.values(req.files); // Extract files from req.files object
+      console.log("images", images);
+
+      // Get unique filenames and store them in an array
+      const imageFilenames = images.map(image => image[0].filename); // Assuming each field has one file
+
+      // Add imageFilenames to the data to be saved in the database
+      body.image_question = imageFilenames[0]; // Or any other logic for assigning images
+      body.image_option_1 = imageFilenames[1];
+      body.image_option_2 = imageFilenames[2];
+      body.image_option_3 = imageFilenames[3];
+      body.image_option_4 = imageFilenames[4];
+      body.image_correct_option = imageFilenames[5];
+
+      console.log("image_question", body.image_question);
       const results = await new Promise((resolve, reject) => {
         updateQuestion(body, (err, results) => {
           if (err) {
@@ -973,7 +1069,7 @@ module.exports = {
      Body Require:
       * user_id
       */
-    try{
+    try {
       const body = req.body;
       const user_id = body.user_id;
       console.log(user_id)
@@ -1022,7 +1118,7 @@ module.exports = {
      Body Require:
       * quiz_id
       */
-    try{
+    try {
       const body = req.body;
       const quiz_id = body.quiz_id;
       console.log(quiz_id)
@@ -1408,5 +1504,4 @@ module.exports = {
   //#endregion
 
 }
-  
-  
+

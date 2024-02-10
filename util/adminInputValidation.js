@@ -214,25 +214,68 @@ module.exports = {
             .notEmpty().withMessage("quiz_id is required")
             .isNumeric().withMessage("quiz_id must be a number"),
         body("question")
-            .notEmpty().withMessage("question is required")
-            .isString().withMessage("question must be a string."),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_question']) {
+                    throw new Error('Either question text or image_question is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('question must be a string');
+                }
+                return true;
+            }),
         body("option_1")
-            .notEmpty().withMessage("option_1 is required")
-            .isString().withMessage("option_1 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_1']) {
+                    throw new Error('Either option_1 text or image_option_1 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_1 must be a string');
+                }
+                return true;
+            }),
         body("option_2")
-            .notEmpty().withMessage("option_2 is required")
-            .isString().withMessage("option_2 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_2']) {
+                    throw new Error('Either option_2 text or image_option_2 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_2 must be a string');
+                }
+                return true;
+            }),
         body("option_3")
-            .notEmpty().withMessage("option_3 is required")
-            .isString().withMessage("option_3 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_3']) {
+                    throw new Error('Either option_3 text or image_option_3 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_3 must be a string');
+                }
+                return true;
+            }),
         body("option_4")
-            .notEmpty().withMessage("option_4 is required")
-            .isString().withMessage("option_4 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_4']) {
+                    throw new Error('Either option_4 text or image_option_4 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_4 must be a string');
+                }
+                return true;
+            }),
         body("correct_option")
-            .notEmpty().withMessage("correct_option is required")
-            .isString().withMessage("correct_option must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_correct_option']) {
+                    throw new Error('Either correct_option text or image_correct_option is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('correct_option must be a string');
+                }
+                return true;
+            }),
         handleValidationErrors,
     ],
+
 
     // Validation middleware for Update Question
     validateUpdateQuestion: [
@@ -243,23 +286,65 @@ module.exports = {
             .notEmpty().withMessage("quiz_id is required")
             .isNumeric().withMessage("quiz_id must be a number"),
         body("question")
-            .notEmpty().withMessage("question is required")
-            .isString().withMessage("question must be a string."),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_question']) {
+                    throw new Error('Either question text or image_question is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('question must be a string');
+                }
+                return true;
+            }),
         body("option_1")
-            .notEmpty().withMessage("option_1 is required")
-            .isString().withMessage("option_1 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_1']) {
+                    throw new Error('Either option_1 text or image_option_1 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_1 must be a string');
+                }
+                return true;
+            }),
         body("option_2")
-            .notEmpty().withMessage("option_2 is required")
-            .isString().withMessage("option_2 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_2']) {
+                    throw new Error('Either option_2 text or image_option_2 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_2 must be a string');
+                }
+                return true;
+            }),
         body("option_3")
-            .notEmpty().withMessage("option_3 is required")
-            .isString().withMessage("option_3 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_3']) {
+                    throw new Error('Either option_3 text or image_option_3 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_3 must be a string');
+                }
+                return true;
+            }),
         body("option_4")
-            .notEmpty().withMessage("option_4 is required")
-            .isString().withMessage("option_4 must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_option_4']) {
+                    throw new Error('Either option_4 text or image_option_4 is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('option_4 must be a string');
+                }
+                return true;
+            }),
         body("correct_option")
-            .notEmpty().withMessage("correct_option is required")
-            .isString().withMessage("correct_option must be a string"),
+            .custom((value, { req }) => {
+                if (!value && !req.files['image_correct_option']) {
+                    throw new Error('Either correct_option text or image_correct_option is required');
+                }
+                if (value && typeof value !== 'string') {
+                    throw new Error('correct_option must be a string');
+                }
+                return true;
+            }),
         handleValidationErrors,
     ],   
 

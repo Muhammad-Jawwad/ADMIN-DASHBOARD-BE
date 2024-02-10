@@ -3,6 +3,7 @@ require("dotenv").config();
 const cors = require('cors');
 const express = require("express");
 const bodyParser = require('body-parser');
+const path = require('path');
 const userRouter = require("./api/users/user.router");
 const adminRouter = require("./api/admin/admin.router");
 
@@ -20,6 +21,8 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+console.log(path.join(__dirname, 'uploads'));
 app.use("/api/users", userRouter);
 app.use("/api/admin", adminRouter);
 

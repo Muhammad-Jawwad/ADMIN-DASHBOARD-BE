@@ -47,6 +47,9 @@ const router = require("express").Router();
 const adminAuthenticateToken = require("../../auth/admin_token_validation");
 const { validateUserSignUp, validateUpdateUser } = require("../../util/userInputValidation");
 
+//Image handling
+const upload = require("../../util/multer"); // Adjust the path based on the file location
+const allowedFileTypes = ["image/jpeg", "image/png"]; // Add more file types if needed
 
 //#region : STUDENT DATA FOR ADMINS
 
@@ -116,6 +119,14 @@ router.patch("/updatequiz",
 
 router.post("/addquestion", 
     adminAuthenticateToken, 
+    upload("uploads/questionImages", allowedFileTypes).fields([
+        { name: 'image_question', maxCount: 1 },
+        { name: 'image_option_1', maxCount: 1 },
+        { name: 'image_option_2', maxCount: 1 },
+        { name: 'image_option_3', maxCount: 1 },
+        { name: 'image_option_4', maxCount: 1 },
+        { name: 'image_correct_option', maxCount: 1 }
+    ]),
     validateCreateQuestion,
     createQuestion
 );
@@ -123,6 +134,14 @@ router.get("/getquestion", adminAuthenticateToken, getQuestion);
 router.get("/questionbyid/:id", adminAuthenticateToken, getQuestionById);
 router.patch("/updatequestion", 
     adminAuthenticateToken, 
+    upload("uploads/questionImages", allowedFileTypes).fields([
+        { name: 'image_question', maxCount: 1 },
+        { name: 'image_option_1', maxCount: 1 },
+        { name: 'image_option_2', maxCount: 1 },
+        { name: 'image_option_3', maxCount: 1 },
+        { name: 'image_option_4', maxCount: 1 },
+        { name: 'image_correct_option', maxCount: 1 }
+    ]),
     validateUpdateQuestion,
     updateQuestion
 );
