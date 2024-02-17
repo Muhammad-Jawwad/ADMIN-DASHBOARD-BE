@@ -35,6 +35,7 @@ const {
 } = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const XLSX = require('xlsx');
+const { getQuestionsImageUrl } = require("../admin/admin.service");
 
 module.exports = {
 
@@ -709,7 +710,7 @@ module.exports = {
       }
       // Generate a unique attempt_code using the current date and time
       const attemptCode = new Date().toISOString().replace(/[-:T.]/g, '');
-
+      
       // Inserting the status = 0 in the quiz_completed to indicate the start of quiz
       const updateQuizStatus = await new Promise((resolve, reject) => {
         quizStatus(body, attemptCode, (err, results) => {
@@ -729,11 +730,39 @@ module.exports = {
           data: []
         });
       }
+
+      // Function to get image URL for a field if it exists
+      const getImageUrl = (question, field) => {
+        if (question[field]) {
+          return getQuestionsImageUrl(question[field]);
+        }
+        return null;
+      };
+
+      const Results = [results]
+      // Add the image URL to each relevant field in the questions
+      const questionsWithImage = Results.map((question) => {
+        const imageFields = [
+          'image_question',
+          'image_option_1',
+          'image_option_2',
+          'image_option_3',
+          'image_option_4',
+          'image_correct_option'
+        ];
+
+        const updatedQuestion = { ...question };
+        imageFields.forEach((field) => {
+          updatedQuestion[field] = getImageUrl(question, field);
+        });
+        return updatedQuestion;
+      });
+
       return res.json({
         code: 200,
         status: true,
         message: "First question found",
-        data: results,
+        data: questionsWithImage[0],
         attemptCode: attemptCode
       });
     } catch (error) {
@@ -894,11 +923,39 @@ module.exports = {
           progress: progressValue
         });
       }
+
+      // Function to get image URL for a field if it exists
+      const getImageUrl = (question, field) => {
+        if (question[field]) {
+          return getQuestionsImageUrl(question[field]);
+        }
+        return null;
+      };
+
+      const Results = [nextQuestion]
+      // Add the image URL to each relevant field in the questions
+      const questionsWithImage = Results.map((question) => {
+        const imageFields = [
+          'image_question',
+          'image_option_1',
+          'image_option_2',
+          'image_option_3',
+          'image_option_4',
+          'image_correct_option'
+        ];
+
+        const updatedQuestion = { ...question };
+        imageFields.forEach((field) => {
+          updatedQuestion[field] = getImageUrl(question, field);
+        });
+        return updatedQuestion;
+      });
+
       return res.json({
         code: 200,
         status: true,
         message: "This is the next question",
-        data: nextQuestion,
+        data: questionsWithImage[0],
         attemptCode: attemptCode,
         progress: progressValue
       });
@@ -1010,11 +1067,39 @@ module.exports = {
         });
 
         var progressValue = progress;
+
+        // Function to get image URL for a field if it exists
+        const getImageUrl = (question, field) => {
+          if (question[field]) {
+            return getQuestionsImageUrl(question[field]);
+          }
+          return null;
+        };
+
+        const Results = [results]
+        // Add the image URL to each relevant field in the questions
+        const questionsWithImage = Results.map((question) => {
+          const imageFields = [
+            'image_question',
+            'image_option_1',
+            'image_option_2',
+            'image_option_3',
+            'image_option_4',
+            'image_correct_option'
+          ];
+
+          const updatedQuestion = { ...question };
+          imageFields.forEach((field) => {
+            updatedQuestion[field] = getImageUrl(question, field);
+          });
+          return updatedQuestion;
+        });
+
         return res.json({
           code: 200,
           status: true,
           message: "First question found",
-          data: results,
+          data: questionsWithImage[0],
           attemptCode: attemptCode,
           progressValue: progressValue,
         });
@@ -1137,11 +1222,39 @@ module.exports = {
         });
       } else {
         console.log("This is from get next review question", reviewQuestionList);
+        
+        // Function to get image URL for a field if it exists
+        const getImageUrl = (question, field) => {
+          if (question[field]) {
+            return getQuestionsImageUrl(question[field]);
+          }
+          return null;
+        };
+
+        const Results = [reviewQuestionList[0]]
+        // Add the image URL to each relevant field in the questions
+        const questionsWithImage = Results.map((question) => {
+          const imageFields = [
+            'image_question',
+            'image_option_1',
+            'image_option_2',
+            'image_option_3',
+            'image_option_4',
+            'image_correct_option'
+          ];
+
+          const updatedQuestion = { ...question };
+          imageFields.forEach((field) => {
+            updatedQuestion[field] = getImageUrl(question, field);
+          });
+          return updatedQuestion;
+        });
+
         return res.json({
           code: 200,
           status: true,
           message: "Next Review question found",
-          data: reviewQuestionList[0],
+          data: questionsWithImage[0],
           attemptCode: attemptCode,
           progressValue: progressValue,
         });

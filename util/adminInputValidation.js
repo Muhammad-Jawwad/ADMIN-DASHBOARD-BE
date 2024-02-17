@@ -48,8 +48,8 @@ module.exports = {
         body("type")
             .notEmpty().withMessage("type is required")
             .custom(value => {
-                if (value !== 'ECAT' && value !== 'MCAT' && value !== 'ET' && value !== 'ADMIN') {
-                    throw new Error("type must be 'ECAT' or 'MCAT' or 'ET' or 'ADMIN'");
+                if (value !== 'ECAT' && value !== 'MCAT' && value !== 'ET' && value !== 'ADMIN' && value !== 'REGISTRAR') {
+                    throw new Error("type must be 'ECAT' or 'MCAT' or 'ET' or 'ADMIN' or 'REGISTRAR'");
                 }
                 return true;
             }).withMessage("Invalid type"),
