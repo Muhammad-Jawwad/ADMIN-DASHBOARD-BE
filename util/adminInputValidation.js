@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const config = require("../config/config");
 
 // Middleware for handling validation errors
 const handleValidationErrors = (req, res, next) => {
@@ -276,7 +277,6 @@ module.exports = {
         handleValidationErrors,
     ],
 
-
     // Validation middleware for Update Question
     validateUpdateQuestion: [
         body("question_id")
@@ -387,6 +387,84 @@ module.exports = {
                 }
                 return true;
             }).withMessage("Invalid type"),
+        handleValidationErrors,
+    ],
+
+    validateStudentRegistration: [
+        body("group_name").isIn(config.group_name).withMessage("Invalid group name ['SCIENCE', 'MEDICAL', 'PRE-ENGINEERING', 'PRE-MEDICAL']"),
+        body("class").isIn(config.class).withMessage("Invalid class ['IX', 'X', 'XI', 'XII']"),
+        body("full_name").notEmpty().withMessage("Full name is required").isString().withMessage("Full name must be a string"),
+        body("b_form").notEmpty().withMessage("B-Form/CNIC Number is required")
+            .isString().withMessage("B-Form/CNIC Number must be a string")
+            .matches(/^\d{13}$/).withMessage("Invalid B-Form/CNIC Number format. It should be a 13-digit number without dashes."),
+        body("father_name").notEmpty().withMessage("Father's name is required").isString().withMessage("Father's name must be a string"),
+        body("father_status").notEmpty().withMessage("Father's status is required").isString().withMessage("Father's name must be a string")
+            .isIn(config.father_status).withMessage("Invalid father_status: ['ALIVE', 'LATE', 'MARTYRED', 'MISSING', 'SEPERATED']"),
+        body("father_designation").notEmpty().withMessage("Father's designation is required").isString().withMessage("Father's designation must be a string"),
+        body("mother_name").notEmpty().withMessage("Mother's name is required").isString().withMessage("Mother's name must be a string"),
+        body("mother_designation").optional().isString().withMessage("Mother's designation must be a string"),
+        body("student_contact").matches(/^\+923\d{9}$/).withMessage("Student contact must start with +923 and have 13 digits"),
+        body("area").notEmpty().withMessage("Area is required").isString().withMessage("Area must be a string"),
+        body("last_school_attended").notEmpty().withMessage("Last school attended is required").isString().withMessage("Last school attended must be a string"),
+        body("percentage_last_class").optional().isInt({ min: 0, max: 100 }).withMessage("Percentage in last class must be between 0 and 100"),
+        body("earning_siblings").isInt({ min: 0 }).withMessage("Earning siblings must not be negative"),
+        body("reference_contact").optional().matches(/^\+923\d{9}$/).withMessage("Reference contact must start with +923 and have 13 digits"),
+        body("medical_illness").notEmpty().withMessage("Medical illness information is required").isString().withMessage("Medical illness information must be a string"),
+        body("father_contact").matches(/^\+923\d{9}$/).withMessage("Father's contact must start with +923 and have 13 digits"),
+        body("father_workplace").notEmpty().withMessage("Father's workplace is required").isString().withMessage("Father's workplace must be a string"),
+        body("father_income").isInt({ min: 0 }).withMessage("Father's income must not be negative"),
+        body("mother_workplace").optional().isString().withMessage("Mother's workplace must be a string"),
+        body("mother_income").optional().isInt({ min: 0 }).withMessage("Mother's income must not be negative"),
+        body("address").notEmpty().withMessage("Address is required").isString().withMessage("Address must be a string"),
+        body("domicile").notEmpty().withMessage("Domicile information is required").isString().withMessage("Domicile information must be a string"),
+        body("previous_education_board").optional().isString().withMessage("Previous education board must be a string"),
+        body("percentage_preliminary_examination").optional().isInt({ min: 0, max: 100 }).withMessage("Percentage in preliminary examination must be between 0 and 100"),
+        body("siblings_count").isInt({ min: 0 }).withMessage("Siblings count must not be negative"),
+        body("current_residence").notEmpty().withMessage("Current residence information is required").isString().withMessage("Current residence information must be a string"),
+        body("reference_name").optional().isString().withMessage("Reference name must be a string"),
+        body("reference_relation").optional().isString().withMessage("Reference relation must be a string"),
+        body("year").isNumeric().isLength({ min: 4, max: 4 }).withMessage("Year must be a 4-digit number")
+            .isInt({ min: 1901, max: 2155 }).withMessage("Year must be within the range of 1901 to 2155"),
+        handleValidationErrors,
+    ],
+
+    validateUpdateRegistration: [
+        body("group_name").isIn(config.group_name).withMessage("Invalid group name ['SCIENCE', 'MEDICAL', 'PRE-ENGINEERING', 'PRE-MEDICAL']"),
+        body("class").isIn(config.class).withMessage("Invalid class ['IX', 'X', 'XI', 'XII']"),
+        body("status").isIn(config.status).withMessage("Invalid status ['ACTIVE', 'INACTIVE', 'BLOCKED']"),
+        body("b_form").notEmpty().withMessage("B-Form/CNIC Number is required")
+            .isString().withMessage("B-Form/CNIC Number must be a string")
+            .matches(/^\d{13}$/).withMessage("Invalid B-Form/CNIC Number format. It should be a 13-digit number without dashes."),
+        body("father_status").notEmpty().withMessage("Father's status is required").isString().withMessage("Father's name must be a string")
+            .isIn(config.father_status).withMessage("Invalid father_status: ['ALIVE', 'LATE', 'MARTYRED', 'MISSING', 'SEPERATED']"),
+        body("registration_id").notEmpty().withMessage("registration_id is required").isNumeric().withMessage("registration_id must be a number"),
+        body("full_name").notEmpty().withMessage("Full name is required").isString().withMessage("Full name must be a string"),
+        body("father_name").notEmpty().withMessage("Father's name is required").isString().withMessage("Father's name must be a string"),
+        body("father_designation").notEmpty().withMessage("Father's designation is required").isString().withMessage("Father's designation must be a string"),
+        body("mother_name").notEmpty().withMessage("Mother's name is required").isString().withMessage("Mother's name must be a string"),
+        body("mother_designation").optional().isString().withMessage("Mother's designation must be a string"),
+        body("student_contact").matches(/^\+923\d{9}$/).withMessage("Student contact must start with +923 and have 13 digits"),
+        body("area").notEmpty().withMessage("Area is required").isString().withMessage("Area must be a string"),
+        body("last_school_attended").notEmpty().withMessage("Last school attended is required").isString().withMessage("Last school attended must be a string"),
+        body("percentage_last_class").optional().isInt({ min: 0, max: 100 }).withMessage("Percentage in last class must be between 0 and 100"),
+        body("earning_siblings").isInt({ min: 0 }).withMessage("Earning siblings must not be negative"),
+        body("reference_contact").optional().matches(/^\+923\d{9}$/).withMessage("Reference contact must start with +923 and have 13 digits"),
+        body("medical_illness").notEmpty().withMessage("Medical illness information is required").isString().withMessage("Medical illness information must be a string"),
+        body("father_contact").matches(/^\+923\d{9}$/).withMessage("Father's contact must start with +923 and have 13 digits"),
+        body("father_workplace").notEmpty().withMessage("Father's workplace is required").isString().withMessage("Father's workplace must be a string"),
+        body("father_income").isInt({ min: 0 }).withMessage("Father's income must not be negative"),
+        body("mother_workplace").optional().isString().withMessage("Mother's workplace must be a string"),
+        body("mother_income").optional().isInt({ min: 0 }).withMessage("Mother's income must not be negative"),
+        body("address").notEmpty().withMessage("Address is required").isString().withMessage("Address must be a string"),
+        body("domicile").notEmpty().withMessage("Domicile information is required").isString().withMessage("Domicile information must be a string"),
+        body("previous_education_board").optional().isString().withMessage("Previous education board must be a string"),
+        body("percentage_preliminary_examination").optional().isInt({ min: 0, max: 100 }).withMessage("Percentage in preliminary examination must be between 0 and 100"),
+        body("siblings_count").isInt({ min: 0 }).withMessage("Siblings count must not be negative"),
+        body("current_residence").notEmpty().withMessage("Current residence information is required").isString().withMessage("Current residence information must be a string"),
+        body("reference_name").optional().isString().withMessage("Reference name must be a string"),
+        body("reference_relation").optional().isString().withMessage("Reference relation must be a string"),
+        body("year").isNumeric().isLength({ min: 4, max: 4 }).withMessage("Year must be a 4-digit number")
+            .isInt({ min: 1901, max: 2155 }).withMessage("Year must be within the range of 1901 to 2155"),
         handleValidationErrors,
     ],
 };

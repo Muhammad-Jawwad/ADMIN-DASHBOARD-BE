@@ -29,7 +29,22 @@ const {
   graphStatsByType,
   createUser,
   updateUser,
-  getQuestionsImageUrl
+  getQuestionsImageUrl,
+  getRegistrations,
+  getRegistrationById,
+  countRegistrations,
+  registerStudent,
+  updateRegistration,
+  registrationStats,
+  createSchool,
+  getSchools,
+  getSchoolById,
+  updateSchool,
+  createColleges,
+  getColleges,
+  getCollegeById,
+  updateCollege,
+  getRegistrationByCNIC
 } = require("./admin.service");
 const {
   hashSync,
@@ -1489,6 +1504,637 @@ module.exports = {
           data: []
         });
       }
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  //#endregion
+
+  //#region : REGISTRATION CRUD
+
+  registrationStats: async (req, res) => {
+    try {
+        const homeStats = await new Promise((resolve, reject) => {
+          registrationStats((err, results) => {
+            if (err) {
+              reject(err);
+            } else {
+              console.log("Registration Stats");
+              resolve(results);
+            }
+          });
+        });
+        return res.json({
+          code: 200,
+          status: true,
+          message: "Here are the registration stats...",
+          data: homeStats
+        });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getRegistrations: async (req, res) => {
+    try {
+      // Pagination parameters
+      const { page = 1, limit = 100, status = null, group_name = null, year = null } = req.query;
+      const offset = (page - 1) * limit;
+
+      const countResults = await new Promise((resolve, reject) => {
+        countRegistrations({ status, group_name, year }, (err, count) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(count);
+          }
+        });
+      });
+
+      const totalPages = Math.ceil(countResults / limit);
+
+      const results = await new Promise((resolve, reject) => {
+        getRegistrations({ offset, limit, status, group_name, year }, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Registrations",
+          data: []
+        });
+      }
+
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results,
+        totalPages: totalPages
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  registerStudent: async (req, res) => {
+  /**
+  Body Required for Student Registration:
+ 
+  Required Fields:
+  * - full_name
+  * - father_name
+  * - father_designation
+  * - mother_name
+  * - mother_designation
+  * - student_contact
+  * - area
+  * - last_school_attended
+  * - percentage_last_class
+  * - group_name
+  * - earning_siblings
+  * - reference_contact
+  * - medical_illness
+  * - class
+  * - father_contact
+  * - father_workplace
+  * - father_income
+  * - mother_workplace
+  * - mother_income
+  * - address
+  * - domicile
+  * - previous_education_board
+  * - percentage_preliminary_examination
+  * - siblings_count
+  * - current_residence
+  * - reference_name
+  * - reference_relation
+  * - year
+  * - father_status
+  * - b_form
+  */
+    try {
+      const body = req.body;
+      console.log("body.b_form", body.b_form)
+      const isBformExist = await new Promise((resolve, reject) => {
+        getRegistrationByCNIC(body.b_form, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (isBformExist.length !== 0) {
+        return res.json({
+          code: 403,
+          status: false,
+          message: "This B-Form/CNIC Number already exist.",
+          data: []
+        });
+      }
+      console.log("isBformExist", isBformExist)
+
+      const results = await new Promise((resolve, reject) => {
+        registerStudent(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Student registered failed",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Student registered successfully",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getRegistrationById: async (req, res) => {
+    try {
+      const registration_id = req.params.id;
+      const results = await new Promise((resolve, reject) => {
+        getRegistrationById(registration_id, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Registration By Id",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  updateRegistration: async (req, res) => {
+    /**
+    Body Required for Student Registration Updation:
+   
+    Required Fields:
+    * - full_name
+    * - father_name
+    * - father_designation
+    * - mother_name
+    * - mother_designation
+    * - student_contact
+    * - area
+    * - last_school_attended
+    * - percentage_last_class
+    * - group_name
+    * - earning_siblings
+    * - reference_contact
+    * - medical_illness
+    * - class
+    * - father_contact
+    * - father_workplace
+    * - father_income
+    * - mother_workplace
+    * - mother_income
+    * - address
+    * - domicile
+    * - previous_education_board
+    * - percentage_preliminary_examination
+    * - sillings_count
+    * - current_residence
+    * - reference_name
+    * - reference_relation
+    * - year
+    * - registration_id
+    * - status
+    * - b_form 
+    * - father_status
+    */
+    try {
+      const body = req.body;
+      const results = await new Promise((resolve, reject) => {
+        updateRegistration(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to update registration",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Updated successfully",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+
+  //#endregion
+
+  //#region : SCHOOLS CRUD
+
+  createSchool: async (req, res) => {
+    /**
+     Body Require:
+     * name
+     */
+    try {
+      const body = req.body;
+      const results = await new Promise((resolve, reject) => {
+        createSchool(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (!results) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "School creation failed",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Sucessfully created new School",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getSchools: async (req, res) => {
+    try {
+      const results = await new Promise((resolve, reject) => {
+        getSchools((err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Schools",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getSchoolById: async (req, res) => {
+    try {
+      const school_id = req.params.id;
+      const results = await new Promise((resolve, reject) => {
+        getSchoolById(school_id, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get school by id",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  updateSchool: async (req, res) => {
+    /**
+      Body Require:
+       * school_id
+       * name
+       */
+    try {
+      const body = req.body;
+      console.log(body);
+      const results = await new Promise((resolve, reject) => {
+        updateSchool(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (!results) {
+        console.log("School details are not updating")
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to update School",
+          data: []
+        });
+      }
+      console.log("School details are updating");
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Updated successfully",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  //#endregion
+
+  //#region : COLLEGES CRUD
+
+  createCollege: async (req, res) => {
+    /**
+     Body Require:
+     * name
+     */
+    try {
+      const body = req.body;
+      const results = await new Promise((resolve, reject) => {
+        createColleges(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (!results) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "College creation failed",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Sucessfully created new College",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getColleges: async (req, res) => {
+    try {
+      const results = await new Promise((resolve, reject) => {
+        getColleges((err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Colleges",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getCollegeById: async (req, res) => {
+    try {
+      const college_id = req.params.id;
+      const results = await new Promise((resolve, reject) => {
+        getCollegeById(college_id, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get College by id",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  updateCollege: async (req, res) => {
+    /**
+      Body Require:
+       * college_id
+       * name
+       */
+    try {
+      const body = req.body;
+      console.log(body);
+      const results = await new Promise((resolve, reject) => {
+        updateCollege(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (!results) {
+        console.log("College details are not updating")
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to update College",
+          data: []
+        });
+      }
+      console.log("College details are updating");
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Updated successfully",
+        data: results
+      });
     } catch (error) {
       console.log(error);
       // Handle the error appropriately

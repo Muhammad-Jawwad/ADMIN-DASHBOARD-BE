@@ -86,7 +86,7 @@ module.exports = {
     /**
      * Admin Register and login
     */
-        
+
     createAdmin: (data, callBack) => {
         console.log(data);
         pool.query(
@@ -233,9 +233,9 @@ module.exports = {
         );
     },
 
-     /**
-     * Quiz CRUD
-     */
+    /**
+    * Quiz CRUD
+    */
 
     createQuiz: (data, callBack) => {
         console.log(data);
@@ -318,7 +318,7 @@ module.exports = {
      */
 
     createQuestion: (data, callBack) => {
-    console.log(data);
+        console.log(data);
         pool.query(
             `insert into quiz_questions(quiz_id,question,option_1,option_2,option_3,option_4,correct_option,image_question,image_option_1,image_option_2,image_option_3,image_option_4,image_correct_option)
               values(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
@@ -416,35 +416,35 @@ module.exports = {
     userResultById: (user_id, callback) => {
         const sql = "SELECT qbc.quiz_name, qbc.duration, qbc.no_of_questions, aq.score, aq.time, qc.updated_at as date, rt.name AS user_name, rt.email_id AS email, qcat.category_name, qcat.type FROM quiz_completed AS qc JOIN quiz_by_category AS qbc ON qc.quiz_id = qbc.id JOIN attempted_quiz AS aq ON qc.attempt_code = aq.attempt_code JOIN register_table AS rt ON qc.user_id = rt.id JOIN quiz_categories AS qcat ON qbc.category_id = qcat.id WHERE qc.user_id = ? AND qc.quiz_status = 1 ORDER BY qc.created_at DESC;";
         pool.query(sql,
-        [
-            user_id
-        ],
-        (error, result) => {
-            if (error) {
-                console.error(error);
-                callback(error, null);
-            } else {
-                console.log("userResultById found in the service:", result);
-                callback(null, result);
-            }
-        });
+            [
+                user_id
+            ],
+            (error, result) => {
+                if (error) {
+                    console.error(error);
+                    callback(error, null);
+                } else {
+                    console.log("userResultById found in the service:", result);
+                    callback(null, result);
+                }
+            });
     },
 
     quizResultById: (quiz_id, callback) => {
         const sql = "SELECT qbc.quiz_name, qbc.no_of_questions, qbc.duration, aq.score, aq.time, qc.updated_at as date, rt.name AS user_name, rt.email_id AS email, qcat.category_name, qcat.type FROM quiz_completed AS qc JOIN quiz_by_category AS qbc ON qc.quiz_id = qbc.id JOIN attempted_quiz AS aq ON qc.attempt_code = aq.attempt_code JOIN register_table AS rt ON qc.user_id = rt.id JOIN quiz_categories AS qcat ON qbc.category_id = qcat.id WHERE qc.quiz_id = ? AND qc.quiz_status = 1 ORDER BY qc.created_at DESC;";
         pool.query(sql,
-        [
-            quiz_id
-        ],
-        (error, result) => {
-            if (error) {
-                console.error(error);
-                callback(error, null);
-            } else {
-                console.log("quizResultById found in the service:", result);
-                callback(null, result);
-            }
-        });
+            [
+                quiz_id
+            ],
+            (error, result) => {
+                if (error) {
+                    console.error(error);
+                    callback(error, null);
+                } else {
+                    console.log("quizResultById found in the service:", result);
+                    callback(null, result);
+                }
+            });
     },
 
     /**
@@ -585,4 +585,440 @@ module.exports = {
                 }
             });
     },
+
+    /**
+     * REGISTRATION CRUD
+     */
+
+    registrationStats: (callback) => {
+        const sql = `SELECT 
+                        reg.ninthClass,
+                            reg.matricClass,
+                            reg.firstYearClass,
+                            reg.secondYearClass,
+                            reg.ninthScienceStudents,
+                            reg.metricScienceStudents,
+                            reg.ninthMedicalStudents,
+                            reg.metricMedicalStudents,
+                            reg.firstYearpreEngineeringStudents,
+                            reg.secondYearpreEngineeringStudents,
+                            reg.firstYearPreMedicalStudents,
+                            reg.secondYearPreMedicalStudents,
+                            blk.ninthBlocked,
+                            blk.matricBlocked,
+                            blk.firstYearBlocked,
+                            blk.secondYearBlocked
+                        FROM
+                            (
+                                SELECT 
+                            SUM(CASE WHEN class = 'IX' THEN 1 ELSE 0 END) AS ninthClass,
+                                SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricClass,
+                                SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearClass,
+                                SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearClass,
+                                SUM(CASE WHEN class = 'IX' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS ninthScienceStudents,
+                                SUM(CASE WHEN class = 'X' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS metricScienceStudents,
+                                SUM(CASE WHEN class = 'IX' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS ninthMedicalStudents,
+                                SUM(CASE WHEN class = 'X' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS metricMedicalStudents,
+                                SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS firstYearpreEngineeringStudents,
+                                SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS secondYearpreEngineeringStudents,
+                                SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS firstYearPreMedicalStudents,
+                                SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS secondYearPreMedicalStudents
+                        FROM 
+                            registration
+                            ) AS reg
+                        LEFT JOIN
+                            (
+                                SELECT 
+                            SUM(CASE WHEN class = 'IX' THEN 1 ELSE 0 END) AS ninthBlocked,
+                                SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricBlocked,
+                                SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearBlocked,
+                                SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearBlocked
+                        FROM 
+                            blocked_registration
+                            ) AS blk ON 1 = 1; 
+                    `
+        pool.query(sql,
+            (error, result) => {
+                if (error) {
+                    console.error(error);
+                    callback(error, null);
+                } else {
+                    console.log("home stats", result);
+                    callback(null, result);
+                }
+            });
+    },
+
+    getRegistrations: ({ offset, limit, status, studentClass, group_name, year }, callBack) => {
+        let query = `SELECT * FROM registration WHERE 1=1`;
+
+        // Filter conditions
+        if (status) query += ` AND status = '${status}'`;
+        if (studentClass) query += ` AND class = '${studentClass}'`;
+        if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (year) query += ` AND year = '${year}'`;
+
+        // Pagination
+        query += ` LIMIT ${limit} OFFSET ${offset}`;
+
+        pool.query(query, [], (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            return callBack(null, results);
+        });
+    },
+
+    countRegistrations: ({ status, group_name, year }, callBack) => {
+        let query = `SELECT COUNT(*) AS count FROM registration WHERE 1=1`;
+
+        // Filter conditions
+        if (status) query += ` AND status = '${status}'`;
+        if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (year) query += ` AND year = '${year}'`;
+
+        pool.query(query, [], (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            const count = results[0].count;
+            return callBack(null, count);
+        });
+    },
+
+    getRegistrationById: (registration_id, callBack) => {
+        pool.query(
+            `select * from registration where id = ?`,
+            [
+                registration_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    getRegistrationByCNIC: (b_form, callBack) => {
+        pool.query(
+            `select * from registration where b_form = ?`,
+            [
+                b_form
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    registerStudent: (data, callBack) => {
+        console.log(data);
+        pool.query(
+            `INSERT INTO registration (full_name, b_form, father_status, profile_picture, father_name, father_designation, mother_name, mother_designation, student_contact, 
+                area, last_school_attended, percentage_last_class, group_name, earning_siblings, reference_contact, medical_illness, class, 
+                father_contact, father_workplace, father_income, mother_workplace, mother_income, address, domicile, previous_education_board, 
+                percentage_preliminary_examination, siblings_count, current_residence, reference_name, reference_relation, year) 
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+            [
+                data.full_name,
+                data.b_form,
+                data.father_status,
+                ("https://api.dicebear.com/6.x/initials/svg?seed=" + data.full_name + "&chars=1").replace(/\s/g, ''),
+                data.father_name,
+                data.father_designation,
+                data.mother_name,
+                data.mother_designation,
+                data.student_contact,
+                data.area,
+                data.last_school_attended,
+                data.percentage_last_class,
+                data.group_name,
+                data.earning_siblings,
+                data.reference_contact,
+                data.medical_illness,
+                data.class,
+                data.father_contact,
+                data.father_workplace,
+                data.father_income,
+                data.mother_workplace,
+                data.mother_income,
+                data.address,
+                data.domicile,
+                data.previous_education_board,
+                data.percentage_preliminary_examination,
+                data.siblings_count,
+                data.current_residence,
+                data.reference_name,
+                data.reference_relation,
+                data.year
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    updateRegistration: (data, callBack) => {
+        // console.log(data);
+        pool.query(
+            `UPDATE registration
+                SET
+                    full_name = ?,
+                    b_form = ?, 
+                    father_status = ?,
+                    profile_picture = ?,
+                    father_name = ?,
+                    father_designation = ?,
+                    mother_name = ?,
+                    mother_designation = ?,
+                    student_contact = ?,
+                    area = ?,
+                    last_school_attended = ?,
+                    percentage_last_class = ?,
+                    group_name = ?,
+                    earning_siblings = ?,
+                    reference_contact = ?,
+                    medical_illness = ?,
+                    class = ?,
+                    father_contact = ?,
+                    father_workplace = ?,
+                    father_income = ?,
+                    mother_workplace = ?,
+                    mother_income = ?,
+                    address = ?,
+                    domicile = ?,
+                    previous_education_board = ?,
+                    percentage_preliminary_examination = ?,
+                    siblings_count = ?,
+                    current_residence = ?,
+                    reference_name = ?,
+                    reference_relation = ?,
+                    year = ?,
+                    status = ? where id = ?;`,
+            [
+                data.full_name,
+                data.b_form,
+                data.father_status,
+                ("https://api.dicebear.com/6.x/initials/svg?seed=" + data.full_name + "&chars=1").replace(/\s/g, ''),
+                data.father_name,
+                data.father_designation,
+                data.mother_name,
+                data.mother_designation,
+                data.student_contact,
+                data.area,
+                data.last_school_attended,
+                data.percentage_last_class,
+                data.group_name,
+                data.earning_siblings,
+                data.reference_contact,
+                data.medical_illness,
+                data.class,
+                data.father_contact,
+                data.father_workplace,
+                data.father_income,
+                data.mother_workplace,
+                data.mother_income,
+                data.address,
+                data.domicile,
+                data.previous_education_board,
+                data.percentage_preliminary_examination,
+                data.siblings_count,
+                data.current_residence,
+                data.reference_name,
+                data.reference_relation,
+                data.year,
+                data.status,
+                data.registration_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    /**
+    * SCHOOLS CRUD
+    */
+
+    createSchool: (data, callBack) => {
+        console.log(data);
+        pool.query(
+            `INSERT INTO schools(name) 
+          VALUES(?)`,
+            [
+                data.name,
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                // Fetch the inserted record
+                pool.query(
+                    `SELECT * FROM schools WHERE id = ?`,
+                    [results.insertId], // Assuming the primary key of schools is named 'id'
+                    (err, rows) => {
+                        if (err) {
+                            callBack(err);
+                        }
+                        // Return the inserted record
+                        callBack(null, rows[0]);
+                    }
+                );
+            }
+        );
+    },
+
+    getSchools: (callBack) => {
+        pool.query(
+            `SELECT * FROM schools;`,
+            [],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    getSchoolById: (school_id, callBack) => {
+        pool.query(
+            `SELECT * FROM schools WHERE id = ?;`,
+            [
+                school_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    updateSchool: (data, callBack) => {
+        // console.log(data);
+        pool.query(
+            `update schools set name=? where id = ?`,
+            [
+                data.name,
+                data.school_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                pool.query(
+                    `SELECT * FROM schools WHERE id = ?`,
+                    [data.school_id],
+                    (err, rows) => {
+                        if (err) {
+                            callBack(err);
+                        }
+                        // Return the inserted record
+                        callBack(null, rows[0]);
+                    }
+                );
+            }
+        );
+    },
+
+    /**
+    * COLLEGES CRUD
+    */
+
+    createColleges: (data, callBack) => {
+        console.log(data);
+        pool.query(
+            `INSERT INTO colleges(name) 
+          VALUES(?)`,
+            [
+                data.name,
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                // Fetch the inserted record
+                pool.query(
+                    `SELECT * FROM colleges WHERE id = ?`,
+                    [results.insertId], // Assuming the primary key of schools is named 'id'
+                    (err, rows) => {
+                        if (err) {
+                            callBack(err);
+                        }
+                        // Return the inserted record
+                        callBack(null, rows[0]);
+                    }
+                );
+            }
+        );
+    },
+
+    getColleges: (callBack) => {
+        pool.query(
+            `SELECT * FROM colleges;`,
+            [],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    getCollegeById: (college_id, callBack) => {
+        pool.query(
+            `SELECT * FROM colleges WHERE id = ?;`,
+            [
+                college_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    updateCollege: (data, callBack) => {
+        // console.log(data);
+        pool.query(
+            `update colleges set name=? where id = ?`,
+            [
+                data.name,
+                data.college_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                pool.query(
+                    `SELECT * FROM colleges WHERE id = ?`,
+                    [data.college_id],
+                    (err, rows) => {
+                        if (err) {
+                            callBack(err);
+                        }
+                        // Return the inserted record
+                        callBack(null, rows[0]);
+                    }
+                );
+            }
+        );
+    },
+
 }

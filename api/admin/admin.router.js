@@ -11,7 +11,9 @@ const {
     validateUserResult,
     validateQuizResult,
     validateHomeStats,
-    validateByType
+    validateByType,
+    validateStudentRegistration,
+    validateUpdateRegistration
 } = require("../../util/adminInputValidation");
 const {
     getRegisteredStudents,
@@ -42,6 +44,19 @@ const {
     graphStatsByType,
     createUser,
     updateUsers,
+    registerStudent,
+    getRegistrations,
+    getRegistrationById,
+    updateRegistration,
+    registrationStats,
+    createSchool,
+    getSchools,
+    getSchoolById,
+    updateSchool,
+    createCollege,
+    getColleges,
+    getCollegeById,
+    updateCollege,
 } = require("./admin.controller");
 const router = require("express").Router();
 const adminAuthenticateToken = require("../../auth/admin_token_validation");
@@ -200,5 +215,52 @@ router.post("/userByType",
 
 //#endregion
 
+
+//#region : REGISTRATION CRUD
+
+router.get("/registrationStats",
+    // adminAuthenticateToken,
+    registrationStats
+);
+router.post("/registerStudent",
+    validateStudentRegistration,
+    registerStudent
+);
+router.get("/getRegistrations", getRegistrations);
+router.get("/getRegistrations/:id", getRegistrationById);
+router.patch("/updateRegistration", 
+    validateUpdateRegistration,
+    updateRegistration
+);
+
+//#endregion
+
+
+//#region : SCHOOLS CRUD
+
+router.post("/createSchool",
+    createSchool
+);
+router.get("/getSchools", getSchools);
+router.get("/getSchool/:id", getSchoolById);
+router.patch("/updateSchool",
+    updateSchool
+);
+
+//#endregion
+
+
+//#region : COLLEGES CRUD
+
+router.post("/createCollege",
+    createCollege
+);
+router.get("/getColleges", getColleges);
+router.get("/getCollege/:id", getCollegeById);
+router.patch("/updateCollege",
+    updateCollege
+);
+
+//#endregion
 
 module.exports = router;
