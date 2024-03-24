@@ -54,7 +54,6 @@ module.exports = {
         );
     },
 
-
     getRegisteredStudents: (callBack) => {
         pool.query(
             `select * from register_table where status = 1`,
@@ -720,10 +719,10 @@ module.exports = {
         console.log(data);
         pool.query(
             `INSERT INTO registration (full_name, b_form, father_status, profile_picture, father_name, father_designation, mother_name, mother_designation, student_contact, 
-                area, last_school_attended, percentage_last_class, group_name, earning_siblings, reference_contact, medical_illness, class, 
-                father_contact, father_workplace, father_income, mother_workplace, mother_income, address, domicile, previous_education_board, 
-                percentage_preliminary_examination, siblings_count, current_residence, reference_name, reference_relation, year) 
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+            area, last_school_attended, percentage_last_class, group_name, earning_siblings, reference_contact, medical_illness, class, 
+            father_contact, father_workplace, father_income, mother_workplace, mother_income, address, domicile, previous_education_board, 
+            percentage_preliminary_examination, siblings_count, current_residence, reference_name, reference_relation, year) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
             [
                 data.full_name,
                 data.b_form,
@@ -756,6 +755,37 @@ module.exports = {
                 data.reference_name,
                 data.reference_relation,
                 data.year
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                } else {
+                    // Fetch the inserted record
+                    const insertedRecordId = results.insertId;
+                    pool.query(
+                        `SELECT * FROM registration WHERE id = ?`,
+                        [insertedRecordId],
+                        (error, results, fields) => {
+                            if (error) {
+                                callBack(error);
+                            } else {
+                                callBack(null, results); // Pass the inserted record to the callback function
+                            }
+                        }
+                    );
+                }
+            }
+        );
+    },
+
+    registerCredentials: (email, password, registration_id, callBack) => {
+        pool.query(
+            `INSERT INTO test_credentials (registration_id, email, password)
+        VALUES (?,?,?);`,
+            [
+                registration_id,
+                email,
+                password
             ],
             (error, results, fields) => {
                 if (error) {

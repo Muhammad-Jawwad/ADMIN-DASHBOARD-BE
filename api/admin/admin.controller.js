@@ -44,7 +44,8 @@ const {
   getColleges,
   getCollegeById,
   updateCollege,
-  getRegistrationByCNIC
+  getRegistrationByCNIC,
+  registerCredentials
 } = require("./admin.service");
 const {
   hashSync,
@@ -54,6 +55,7 @@ const {
 const jwt = require("jsonwebtoken");
 const XLSX = require('xlsx');
 const config = require("../../config/config");
+const crypto = require('crypto');
 
 module.exports = {
 
@@ -1681,6 +1683,22 @@ module.exports = {
           data: []
         });
       }
+      console.log("results id", results[0]);
+      const registration_id = results[0].id
+      console.log("inserted id", results[0].id);
+      const email = `${body.full_name.replace(/\s+/g, '').toLowerCase()}${registration_id}@edutel.com`;
+      const password = `E-${body.year}-${registration_id}`;
+      console.log("email",email)
+      console.log("password",password)
+      const credentials = await new Promise((resolve, reject) => {
+        registerCredentials(email, password, registration_id, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
       return res.json({
         code: 200,
         status: true,
