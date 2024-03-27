@@ -715,6 +715,21 @@ module.exports = {
         );
     },
 
+    checkBlockedRegistrationByCNIC: (b_form, callBack) => {
+        pool.query(
+            `select * from blocked_registration where status = 'BLOCKED' and b_form = ?`,
+            [
+                b_form
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
     registerStudent: (data, callBack) => {
         console.log(data);
         pool.query(
@@ -866,6 +881,233 @@ module.exports = {
                 data.reference_relation,
                 data.year,
                 data.status,
+                data.registration_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    getBlockedRegistrations: ({ offset, limit, status, studentClass, group_name, year }, callBack) => {
+        let query = `SELECT * FROM blocked_registration WHERE 1=1`;
+
+        // Filter conditions
+        if (status) query += ` AND status = '${status}'`;
+        if (studentClass) query += ` AND class = '${studentClass}'`;
+        if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (year) query += ` AND year = '${year}'`;
+
+        // Pagination
+        query += ` LIMIT ${limit} OFFSET ${offset}`;
+
+        pool.query(query, [], (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            return callBack(null, results);
+        });
+    },
+
+    countBlockedRegistrations: ({ status, group_name, year }, callBack) => {
+        let query = `SELECT COUNT(*) AS count FROM blocked_registration WHERE 1=1`;
+
+        // Filter conditions
+        if (status) query += ` AND status = '${status}'`;
+        if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (year) query += ` AND year = '${year}'`;
+
+        pool.query(query, [], (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            const count = results[0].count;
+            return callBack(null, count);
+        });
+    },
+
+    getBlockedRegistrationByCNIC: (b_form, callBack) => {
+        pool.query(
+            `select * from blocked_registration where b_form = ?`,
+            [
+                b_form
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    getCredentialByRegId: (reg_id, callBack) => {
+        pool.query(
+            `select * from test_credentials where registration_id = ?`,
+            [
+                reg_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    addBlockedStudent: (data, callBack) => {
+        console.log(data);
+        pool.query(
+            `INSERT INTO blocked_registration (full_name, b_form, father_status, profile_picture, father_name, father_designation, mother_name, mother_designation, student_contact, 
+            area, last_school_attended, percentage_last_class, group_name, earning_siblings, reference_contact, medical_illness, class, 
+            father_contact, father_workplace, father_income, mother_workplace, mother_income, address, domicile, previous_education_board, 
+            percentage_preliminary_examination, siblings_count, current_residence, reference_name, reference_relation, year) 
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+            [
+                data.full_name,
+                data.b_form,
+                data.father_status,
+                ("https://api.dicebear.com/6.x/initials/svg?seed=" + data.full_name + "&chars=1").replace(/\s/g, ''),
+                data.father_name,
+                data.father_designation,
+                data.mother_name,
+                data.mother_designation,
+                data.student_contact,
+                data.area,
+                data.last_school_attended,
+                data.percentage_last_class,
+                data.group_name,
+                data.earning_siblings,
+                data.reference_contact,
+                data.medical_illness,
+                data.class,
+                data.father_contact,
+                data.father_workplace,
+                data.father_income,
+                data.mother_workplace,
+                data.mother_income,
+                data.address,
+                data.domicile,
+                data.previous_education_board,
+                data.percentage_preliminary_examination,
+                data.siblings_count,
+                data.current_residence,
+                data.reference_name,
+                data.reference_relation,
+                data.year
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                } else {
+                    // Fetch the inserted record
+                    const insertedRecordId = results.insertId;
+                    pool.query(
+                        `SELECT * FROM blocked_registration WHERE id = ?`,
+                        [insertedRecordId],
+                        (error, results, fields) => {
+                            if (error) {
+                                callBack(error);
+                            } else {
+                                callBack(null, results); // Pass the inserted record to the callback function
+                            }
+                        }
+                    );
+                }
+            }
+        );
+    },
+
+    getBlockedRegistrationById: (registration_id, callBack) => {
+        pool.query(
+            `select * from blocked_registration where id = ?`,
+            [
+                registration_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    updateBlockedRegistration: (data, callBack) => {
+        // console.log(data);
+        pool.query(
+            `UPDATE blocked_registration
+                SET
+                    full_name = ?,
+                    b_form = ?, 
+                    father_status = ?,
+                    profile_picture = ?,
+                    father_name = ?,
+                    father_designation = ?,
+                    mother_name = ?,
+                    mother_designation = ?,
+                    student_contact = ?,
+                    area = ?,
+                    last_school_attended = ?,
+                    percentage_last_class = ?,
+                    group_name = ?,
+                    earning_siblings = ?,
+                    reference_contact = ?,
+                    medical_illness = ?,
+                    class = ?,
+                    father_contact = ?,
+                    father_workplace = ?,
+                    father_income = ?,
+                    mother_workplace = ?,
+                    mother_income = ?,
+                    address = ?,
+                    domicile = ?,
+                    previous_education_board = ?,
+                    percentage_preliminary_examination = ?,
+                    siblings_count = ?,
+                    current_residence = ?,
+                    reference_name = ?,
+                    reference_relation = ?,
+                    status = ?,
+                    year = ? 
+                    where id = ?;`,
+            [
+                data.full_name,
+                data.b_form,
+                data.father_status,
+                ("https://api.dicebear.com/6.x/initials/svg?seed=" + data.full_name + "&chars=1").replace(/\s/g, ''),
+                data.father_name,
+                data.father_designation,
+                data.mother_name,
+                data.mother_designation,
+                data.student_contact,
+                data.area,
+                data.last_school_attended,
+                data.percentage_last_class,
+                data.group_name,
+                data.earning_siblings,
+                data.reference_contact,
+                data.medical_illness,
+                data.class,
+                data.father_contact,
+                data.father_workplace,
+                data.father_income,
+                data.mother_workplace,
+                data.mother_income,
+                data.address,
+                data.domicile,
+                data.previous_education_board,
+                data.percentage_preliminary_examination,
+                data.siblings_count,
+                data.current_residence,
+                data.reference_name,
+                data.reference_relation,
+                data.status,
+                data.year,
                 data.registration_id
             ],
             (error, results, fields) => {

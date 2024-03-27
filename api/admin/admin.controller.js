@@ -45,7 +45,15 @@ const {
   getCollegeById,
   updateCollege,
   getRegistrationByCNIC,
-  registerCredentials
+  registerCredentials,
+  countBlockedRegistrations,
+  getBlockedRegistrations,
+  getBlockedRegistrationByCNIC,
+  addBlockedStudent,
+  getBlockedRegistrationById,
+  updateBlockedRegistration,
+  checkBlockedRegistrationByCNIC,
+  getCredentialByRegId
 } = require("./admin.service");
 const {
   hashSync,
@@ -1647,6 +1655,23 @@ module.exports = {
     try {
       const body = req.body;
       console.log("body.b_form", body.b_form)
+      const isBformBlocked = await new Promise((resolve, reject) => {
+        checkBlockedRegistrationByCNIC(body.b_form, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (isBformBlocked.length !== 0) {
+        return res.json({
+          code: 405,
+          status: false,
+          message: "This B-Form/CNIC Number is blocked.",
+          data: []
+        });
+      }
       const isBformExist = await new Promise((resolve, reject) => {
         getRegistrationByCNIC(body.b_form, (err, results) => {
           if (err) {
@@ -1737,11 +1762,30 @@ module.exports = {
           data: []
         });
       }
+      const credentials = await new Promise((resolve, reject) => {
+        getCredentialByRegId(registration_id, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (credentials.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get credentials By Registration Id",
+          data: []
+        });
+      }
+      
       return res.json({
         code: 200,
         status: true,
         message: "Data found",
-        data: results
+        data: results,
+        credentials: credentials
       });
     } catch (error) {
       console.log(error);
@@ -1830,6 +1874,268 @@ module.exports = {
     }
   },
 
+  getBlockedRegistrations: async (req, res) => {
+    try {
+      // Pagination parameters
+      const { page = 1, limit = 100, status = null, group_name = null, year = null } = req.query;
+      const offset = (page - 1) * limit;
+
+      const countResults = await new Promise((resolve, reject) => {
+        countBlockedRegistrations({ status, group_name, year }, (err, count) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(count);
+          }
+        });
+      });
+
+      const totalPages = Math.ceil(countResults / limit);
+
+      const results = await new Promise((resolve, reject) => {
+        getBlockedRegistrations({ offset, limit, status, group_name, year }, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Blocked Registrations",
+          data: []
+        });
+      }
+
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results,
+        totalPages: totalPages
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  addBlockedStudent: async (req, res) => {
+    /**
+    Body Required for Student Registration:
+   
+    Required Fields:
+    * - full_name
+    * - father_name
+    * - father_designation
+    * - mother_name
+    * - mother_designation
+    * - student_contact
+    * - area
+    * - last_school_attended
+    * - percentage_last_class
+    * - group_name
+    * - earning_siblings
+    * - reference_contact
+    * - medical_illness
+    * - class
+    * - father_contact
+    * - father_workplace
+    * - father_income
+    * - mother_workplace
+    * - mother_income
+    * - address
+    * - domicile
+    * - previous_education_board
+    * - percentage_preliminary_examination
+    * - siblings_count
+    * - current_residence
+    * - reference_name
+    * - reference_relation
+    * - year
+    * - father_status
+    * - b_form
+    */
+    try {
+      const body = req.body;
+      console.log("body.b_form", body.b_form)
+      const isBformExist = await new Promise((resolve, reject) => {
+        getBlockedRegistrationByCNIC(body.b_form, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (isBformExist.length !== 0) {
+        return res.json({
+          code: 403,
+          status: false,
+          message: "This B-Form/CNIC Number already exist.",
+          data: []
+        });
+      }
+      console.log("isBformExist", isBformExist)
+
+      const results = await new Promise((resolve, reject) => {
+        addBlockedStudent(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Blocked Student registered failed",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Blocked Student registered successfully",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getBlockedRegistrationById: async (req, res) => {
+    try {
+      const registration_id = req.params.id;
+      const results = await new Promise((resolve, reject) => {
+        getBlockedRegistrationById(registration_id, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Blocked Registration By Id",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  updateBlockedRegistration: async (req, res) => {
+    /**
+    Body Required for Student Registration Updation:
+   
+    Required Fields:
+    * - full_name
+    * - father_name
+    * - father_designation
+    * - mother_name
+    * - mother_designation
+    * - student_contact
+    * - area
+    * - last_school_attended
+    * - percentage_last_class
+    * - group_name
+    * - earning_siblings
+    * - reference_contact
+    * - medical_illness
+    * - class
+    * - father_contact
+    * - father_workplace
+    * - father_income
+    * - mother_workplace
+    * - mother_income
+    * - address
+    * - domicile
+    * - previous_education_board
+    * - percentage_preliminary_examination
+    * - sillings_count
+    * - current_residence
+    * - reference_name
+    * - reference_relation
+    * - year
+    * - registration_id
+    * - status
+    * - b_form 
+    * - father_status
+    */
+    try {
+      const body = req.body;
+      console.log("body", body)
+      const results = await new Promise((resolve, reject) => {
+        updateBlockedRegistration(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to update blocked registration",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Updated successfully",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
 
   //#endregion
 

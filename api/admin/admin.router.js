@@ -57,6 +57,10 @@ const {
     getColleges,
     getCollegeById,
     updateCollege,
+    getBlockedRegistrations,
+    addBlockedStudent,
+    getBlockedRegistrationById,
+    updateBlockedRegistration,
 } = require("./admin.controller");
 const router = require("express").Router();
 const adminAuthenticateToken = require("../../auth/admin_token_validation");
@@ -233,6 +237,17 @@ router.patch("/updateRegistration",
     updateRegistration
 );
 
+
+router.get("/getBlockedRegistrations", getBlockedRegistrations);
+router.post("/addBlockedStudent",
+    validateStudentRegistration,
+    addBlockedStudent
+);
+router.get("/getBlockedRegistration/:id", getBlockedRegistrationById);
+router.patch("/updateBlockedRegistration",
+    validateUpdateRegistration,
+    updateBlockedRegistration
+);
 //#endregion
 
 
