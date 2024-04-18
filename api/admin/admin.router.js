@@ -13,7 +13,8 @@ const {
     validateHomeStats,
     validateByType,
     validateStudentRegistration,
-    validateUpdateRegistration
+    validateUpdateRegistration,
+    validateUpdateRegistrationAppearence
 } = require("../../util/adminInputValidation");
 const {
     getRegisteredStudents,
@@ -61,6 +62,7 @@ const {
     addBlockedStudent,
     getBlockedRegistrationById,
     updateBlockedRegistration,
+    updateBlockedRegistrationAppearence,
 } = require("./admin.controller");
 const router = require("express").Router();
 const adminAuthenticateToken = require("../../auth/admin_token_validation");
@@ -237,7 +239,6 @@ router.patch("/updateRegistration",
     updateRegistration
 );
 
-
 router.get("/getBlockedRegistrations", getBlockedRegistrations);
 router.post("/addBlockedStudent",
     validateStudentRegistration,
@@ -248,6 +249,11 @@ router.patch("/updateBlockedRegistration",
     validateUpdateRegistration,
     updateBlockedRegistration
 );
+router.patch("/appearedBlockedRegistration",
+    validateUpdateRegistrationAppearence,
+    updateBlockedRegistrationAppearence
+);
+
 //#endregion
 
 

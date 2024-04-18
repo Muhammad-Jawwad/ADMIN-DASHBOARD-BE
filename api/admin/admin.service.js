@@ -591,51 +591,66 @@ module.exports = {
 
     registrationStats: (callback) => {
         const sql = `SELECT 
-                        reg.ninthClass,
-                            reg.matricClass,
-                            reg.firstYearClass,
-                            reg.secondYearClass,
-                            reg.ninthScienceStudents,
-                            reg.metricScienceStudents,
-                            reg.ninthMedicalStudents,
-                            reg.metricMedicalStudents,
-                            reg.firstYearpreEngineeringStudents,
-                            reg.secondYearpreEngineeringStudents,
-                            reg.firstYearPreMedicalStudents,
-                            reg.secondYearPreMedicalStudents,
-                            blk.ninthBlocked,
-                            blk.matricBlocked,
-                            blk.firstYearBlocked,
-                            blk.secondYearBlocked
-                        FROM
-                            (
-                                SELECT 
-                            SUM(CASE WHEN class = 'IX' THEN 1 ELSE 0 END) AS ninthClass,
-                                SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricClass,
-                                SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearClass,
-                                SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearClass,
-                                SUM(CASE WHEN class = 'IX' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS ninthScienceStudents,
-                                SUM(CASE WHEN class = 'X' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS metricScienceStudents,
-                                SUM(CASE WHEN class = 'IX' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS ninthMedicalStudents,
-                                SUM(CASE WHEN class = 'X' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS metricMedicalStudents,
-                                SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS firstYearpreEngineeringStudents,
-                                SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS secondYearpreEngineeringStudents,
-                                SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS firstYearPreMedicalStudents,
-                                SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS secondYearPreMedicalStudents
-                        FROM 
-                            registration
-                            ) AS reg
-                        LEFT JOIN
-                            (
-                                SELECT 
-                            SUM(CASE WHEN class = 'IX' THEN 1 ELSE 0 END) AS ninthBlocked,
-                                SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricBlocked,
-                                SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearBlocked,
-                                SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearBlocked
-                        FROM 
-                            blocked_registration
-                            ) AS blk ON 1 = 1; 
-                    `
+    reg.ninthClass,
+    reg.matricClass,
+    reg.firstYearClass,
+    reg.secondYearClass,
+    reg.ninthScienceStudents,
+    reg.metricScienceStudents,
+    reg.ninthMedicalStudents,
+    reg.metricMedicalStudents,
+    reg.firstYearpreEngineeringStudents,
+    reg.secondYearpreEngineeringStudents,
+    reg.firstYearPreMedicalStudents,
+    reg.secondYearPreMedicalStudents,
+    blk.ninthBlocked,
+    blk.matricBlocked,
+    blk.firstYearBlocked,
+    blk.secondYearBlocked,
+    appeared.ninthAppeared,
+    appeared.matricAppeared,
+    appeared.firstYearAppeared,
+    appeared.secondYearAppeared
+FROM
+    (
+        SELECT 
+            SUM(CASE WHEN class = 'IX' THEN 1 ELSE 0 END) AS ninthClass,
+            SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricClass,
+            SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearClass,
+            SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearClass,
+            SUM(CASE WHEN class = 'IX' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS ninthScienceStudents,
+            SUM(CASE WHEN class = 'X' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS metricScienceStudents,
+            SUM(CASE WHEN class = 'IX' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS ninthMedicalStudents,
+            SUM(CASE WHEN class = 'X' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS metricMedicalStudents,
+            SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS firstYearpreEngineeringStudents,
+            SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS secondYearpreEngineeringStudents,
+            SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS firstYearPreMedicalStudents,
+            SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS secondYearPreMedicalStudents
+        FROM 
+            registration
+    ) AS reg
+LEFT JOIN
+    (
+        SELECT 
+            SUM(CASE WHEN class = 'IX' THEN 1 ELSE 0 END) AS ninthBlocked,
+            SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricBlocked,
+            SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearBlocked,
+            SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearBlocked
+        FROM 
+            blocked_registration
+    ) AS blk ON 1 = 1
+LEFT JOIN
+    (
+        SELECT 
+            SUM(CASE WHEN class = 'IX' AND appeared = 1 THEN 1 ELSE 0 END) AS ninthAppeared,
+            SUM(CASE WHEN class = 'X' AND appeared = 1 THEN 1 ELSE 0 END) AS matricAppeared,
+            SUM(CASE WHEN class = 'XI' AND appeared = 1 THEN 1 ELSE 0 END) AS firstYearAppeared,
+            SUM(CASE WHEN class = 'XII' AND appeared = 1 THEN 1 ELSE 0 END) AS secondYearAppeared
+        FROM 
+            blocked_registration
+        WHERE
+            status = 'BLOCKED'
+    ) AS appeared ON 1 = 1;`
         pool.query(sql,
             (error, result) => {
                 if (error) {
@@ -1108,6 +1123,26 @@ module.exports = {
                 data.reference_relation,
                 data.status,
                 data.year,
+                data.registration_id
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    updateBlockedRegistrationAppearence: (data, callBack) => {
+        // console.log(data);
+        pool.query(
+            `UPDATE blocked_registration
+                SET
+                    appeared = ? 
+                    where id = ?;`,
+            [
+                parseInt(data.appeared),
                 data.registration_id
             ],
             (error, results, fields) => {

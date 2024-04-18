@@ -53,7 +53,8 @@ const {
   getBlockedRegistrationById,
   updateBlockedRegistration,
   checkBlockedRegistrationByCNIC,
-  getCredentialByRegId
+  getCredentialByRegId,
+  updateBlockedRegistrationAppearence
 } = require("./admin.service");
 const {
   hashSync,
@@ -2123,6 +2124,52 @@ module.exports = {
         code: 200,
         status: true,
         message: "Updated successfully",
+        data: results
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+  
+  updateBlockedRegistrationAppearence: async (req, res) => {
+    /**
+    Body Required for Student Registration Updation:
+   
+    Required Fields:
+    * - registration_id
+    * - appeared
+    */
+    try {
+      const body = req.body;
+      console.log("body", body)
+      const results = await new Promise((resolve, reject) => {
+        updateBlockedRegistrationAppearence(body, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to update blocked registration appearence",
+          data: []
+        });
+      }
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Appearence Updated successfully",
         data: results
       });
     } catch (error) {

@@ -467,4 +467,15 @@ module.exports = {
             .isInt({ min: 1901, max: 2155 }).withMessage("Year must be within the range of 1901 to 2155"),
         handleValidationErrors,
     ],
+
+    validateUpdateRegistrationAppearence: [
+        body("registration_id").notEmpty().withMessage("registration_id is required").isNumeric().withMessage("registration_id must be a number"),
+        body("appeared")
+            .custom((value) => {
+                if (value !== 0 && value !== 1) {
+                    throw new Error("Appearance must be either 0 or 1");
+                }
+                return true;
+            }), handleValidationErrors,
+    ],
 };
