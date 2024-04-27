@@ -239,6 +239,8 @@ router.patch("/updateRegistration",
     updateRegistration
 );
 
+
+// Not in use right now changes required
 router.get("/getBlockedRegistrations", getBlockedRegistrations);
 router.post("/addBlockedStudent",
     validateStudentRegistration,

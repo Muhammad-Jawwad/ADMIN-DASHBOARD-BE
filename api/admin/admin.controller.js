@@ -1626,21 +1626,17 @@ module.exports = {
   * - father_name
   * - father_designation
   * - mother_name
-  * - mother_designation
+  * - mother_occupation
   * - student_contact
-  * - area
   * - last_school_attended
   * - percentage_last_class
   * - group_name
-  * - earning_siblings
   * - reference_contact
   * - medical_illness
   * - class
   * - father_contact
   * - father_workplace
-  * - father_income
-  * - mother_workplace
-  * - mother_income
+  * - family_income
   * - address
   * - domicile
   * - previous_education_board
@@ -1655,6 +1651,7 @@ module.exports = {
   */
     try {
       const body = req.body;
+      var blocked = 0;
       console.log("body.b_form", body.b_form)
       const isBformBlocked = await new Promise((resolve, reject) => {
         checkBlockedRegistrationByCNIC(body.b_form, (err, results) => {
@@ -1666,12 +1663,7 @@ module.exports = {
         });
       });
       if (isBformBlocked.length !== 0) {
-        return res.json({
-          code: 405,
-          status: false,
-          message: "This B-Form/CNIC Number is blocked.",
-          data: []
-        });
+        blocked = 1
       }
       const isBformExist = await new Promise((resolve, reject) => {
         getRegistrationByCNIC(body.b_form, (err, results) => {
@@ -1693,7 +1685,7 @@ module.exports = {
       console.log("isBformExist", isBformExist)
 
       const results = await new Promise((resolve, reject) => {
-        registerStudent(body, (err, results) => {
+        registerStudent(body, blocked, (err, results) => {
           if (err) {
             reject(err);
           } else {
@@ -1840,6 +1832,25 @@ module.exports = {
     */
     try {
       const body = req.body;
+      const isBformExist = await new Promise((resolve, reject) => {
+        getRegistrationByCNIC(body.b_form, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (isBformExist.length !== 0) {
+        return res.json({
+          code: 403,
+          status: false,
+          message: "This B-Form/CNIC Number already exist.",
+          data: []
+        });
+      }
+      console.log("isBformExist", isBformExist)
+
       const results = await new Promise((resolve, reject) => {
         updateRegistration(body, (err, results) => {
           if (err) {
