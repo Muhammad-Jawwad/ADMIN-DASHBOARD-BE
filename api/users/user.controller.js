@@ -28,11 +28,6 @@ const {
   getQuizById,
   categoryByType,
 } = require("./user.service");
-const { 
-  hashSync, 
-  genSaltSync, 
-  compareSync 
-} = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const XLSX = require('xlsx');
 const { getQuestionsImageUrl } = require("../admin/admin.service");
@@ -53,8 +48,6 @@ module.exports = {
      */
     try{
       const body = req.body;
-      const salt = genSaltSync(10);
-      body.password = hashSync(body.password, salt);
       const results = await new Promise((resolve, reject) => {
         create(body, (err, results) => {
           if (err) {
@@ -115,8 +108,7 @@ module.exports = {
           data: []
         });
       }
-      const result = compareSync(body.password, results.password);
-      if (result) {
+      if (body.password === results.password) {
         results.password = undefined;
         const jsontoken = jwt.sign({
           id: results.id,
@@ -169,8 +161,6 @@ module.exports = {
     try{
       const body = req.body;
       console.log(body);
-      const salt = genSaltSync(10);
-      body.password = hashSync(body.password, salt);
       const results = await new Promise((resolve, reject) => {
         updateUser(body, (err, results) => {
           if (err) {
