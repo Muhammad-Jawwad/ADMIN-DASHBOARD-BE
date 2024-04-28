@@ -1818,25 +1818,6 @@ module.exports = {
     */
     try {
       const body = req.body;
-      const isBformExist = await new Promise((resolve, reject) => {
-        getRegistrationByCNIC(body.b_form, (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(results);
-          }
-        });
-      });
-      if (isBformExist.length !== 0) {
-        return res.json({
-          code: 403,
-          status: false,
-          message: "This B-Form/CNIC Number already exist.",
-          data: []
-        });
-      }
-      console.log("isBformExist", isBformExist)
-
       const results = await new Promise((resolve, reject) => {
         updateRegistration(body, (err, results) => {
           if (err) {

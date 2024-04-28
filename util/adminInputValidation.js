@@ -391,7 +391,7 @@ module.exports = {
     ],
 
     validateStudentRegistration: [
-        body("group_name").isIn(config.group_name).withMessage("Invalid group name ['SCIENCE', 'MEDICAL', 'PRE-ENGINEERING', 'PRE-MEDICAL']"),
+        body("group_name").isIn(config.group_name).withMessage("Invalid group name ['COMPUTER-SCIENCE', 'MEDICAL-SCIENCE', 'PRE-ENGINEERING', 'PRE-MEDICAL']"),
         body("class").isIn(config.class).withMessage("Invalid class ['IX', 'X', 'XI', 'XII']"),
         body("full_name").notEmpty().withMessage("Full name is required").isString().withMessage("Full name must be a string"),
         body("b_form").notEmpty().withMessage("B-Form/CNIC Number is required")
