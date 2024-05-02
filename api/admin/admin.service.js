@@ -606,11 +606,7 @@ module.exports = {
     blk.ninthBlocked,
     blk.matricBlocked,
     blk.firstYearBlocked,
-    blk.secondYearBlocked,
-    appeared.ninthAppeared,
-    appeared.matricAppeared,
-    appeared.firstYearAppeared,
-    appeared.secondYearAppeared
+    blk.secondYearBlocked
 FROM
     (
         SELECT 
@@ -618,10 +614,10 @@ FROM
             SUM(CASE WHEN class = 'X' THEN 1 ELSE 0 END) AS matricClass,
             SUM(CASE WHEN class = 'XI' THEN 1 ELSE 0 END) AS firstYearClass,
             SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearClass,
-            SUM(CASE WHEN class = 'IX' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS ninthScienceStudents,
-            SUM(CASE WHEN class = 'X' AND group_name = 'SCIENCE' THEN 1 ELSE 0 END) AS metricScienceStudents,
-            SUM(CASE WHEN class = 'IX' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS ninthMedicalStudents,
-            SUM(CASE WHEN class = 'X' AND group_name = 'MEDICAL' THEN 1 ELSE 0 END) AS metricMedicalStudents,
+            SUM(CASE WHEN class = 'IX' AND group_name = 'COMPUTER-SCIENCE' THEN 1 ELSE 0 END) AS ninthScienceStudents,
+            SUM(CASE WHEN class = 'X' AND group_name = 'COMPUTER-SCIENCE' THEN 1 ELSE 0 END) AS metricScienceStudents,
+            SUM(CASE WHEN class = 'IX' AND group_name = 'MEDICAL-SCIENCE' THEN 1 ELSE 0 END) AS ninthMedicalStudents,
+            SUM(CASE WHEN class = 'X' AND group_name = 'MEDICAL-SCIENCE' THEN 1 ELSE 0 END) AS metricMedicalStudents,
             SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS firstYearpreEngineeringStudents,
             SUM(CASE WHEN class = 'XII' AND group_name = 'PRE-ENGINEERING' THEN 1 ELSE 0 END) AS secondYearpreEngineeringStudents,
             SUM(CASE WHEN class = 'XI' AND group_name = 'PRE-MEDICAL' THEN 1 ELSE 0 END) AS firstYearPreMedicalStudents,
@@ -638,19 +634,7 @@ LEFT JOIN
             SUM(CASE WHEN class = 'XII' THEN 1 ELSE 0 END) AS secondYearBlocked
         FROM 
             blocked_registration
-    ) AS blk ON 1 = 1
-LEFT JOIN
-    (
-        SELECT 
-            SUM(CASE WHEN class = 'IX' AND appeared = 1 THEN 1 ELSE 0 END) AS ninthAppeared,
-            SUM(CASE WHEN class = 'X' AND appeared = 1 THEN 1 ELSE 0 END) AS matricAppeared,
-            SUM(CASE WHEN class = 'XI' AND appeared = 1 THEN 1 ELSE 0 END) AS firstYearAppeared,
-            SUM(CASE WHEN class = 'XII' AND appeared = 1 THEN 1 ELSE 0 END) AS secondYearAppeared
-        FROM 
-            blocked_registration
-        WHERE
-            status = 'BLOCKED'
-    ) AS appeared ON 1 = 1;`
+    ) AS blk ON 1 = 1;`
         pool.query(sql,
             (error, result) => {
                 if (error) {
@@ -681,6 +665,18 @@ LEFT JOIN
             }
             return callBack(null, results);
         });
+    },
+    
+    getAllRegistrations: (callBack) => {
+        pool.query(
+            `select * from registration`,
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
     },
 
     countRegistrations: ({ status, group_name, year }, callBack) => {
@@ -777,9 +773,11 @@ LEFT JOIN
                 reference_relation, 
                 year, 
                 description, 
-                blocked
+                blocked,
+                roll_number,
+                test_center
             ) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
             [
                 data.full_name,
                 data.b_form,
@@ -810,6 +808,8 @@ LEFT JOIN
                 data.year,
                 data.description,
                 blocked,
+                data.roll_number,
+                data.test_center,
             ],
             (error, results, fields) => {
                 if (error) {
@@ -966,6 +966,58 @@ LEFT JOIN
     getBlockedRegistrationByCNIC: (b_form, callBack) => {
         pool.query(
             `select * from blocked_registration where b_form = ?`,
+            [
+                b_form
+            ],
+            (error, results, fields) => {
+                if (error) {
+                    callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
+
+    getPromotedStudents: ({ offset, limit, status, studentClass, group_name, year }, callBack) => {
+        let query = `SELECT * FROM promoted_students WHERE 1=1`;
+
+        // Filter conditions
+        if (status) query += ` AND status = '${status}'`;
+        if (studentClass) query += ` AND class = '${studentClass}'`;
+        if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (year) query += ` AND year = '${year}'`;
+
+        // Pagination
+        query += ` LIMIT ${limit} OFFSET ${offset}`;
+
+        pool.query(query, [], (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            return callBack(null, results);
+        });
+    },
+
+    countPromotedStudents: ({ status, group_name, year }, callBack) => {
+        let query = `SELECT COUNT(*) AS count FROM promoted_students WHERE 1=1`;
+
+        // Filter conditions
+        if (status) query += ` AND status = '${status}'`;
+        if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (year) query += ` AND year = '${year}'`;
+
+        pool.query(query, [], (error, results, fields) => {
+            if (error) {
+                callBack(error);
+            }
+            const count = results[0].count;
+            return callBack(null, count);
+        });
+    },
+
+    checkPromotedStudentByCNIC: (b_form, callBack) => {
+        pool.query(
+            `select * from promoted_students where b_form = ?`,
             [
                 b_form
             ],

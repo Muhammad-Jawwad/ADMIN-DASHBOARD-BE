@@ -54,7 +54,11 @@ const {
   updateBlockedRegistration,
   checkBlockedRegistrationByCNIC,
   getCredentialByRegId,
-  updateBlockedRegistrationAppearence
+  updateBlockedRegistrationAppearence,
+  countPromotedStudents,
+  getPromotedStudents,
+  checkPromotedStudentByCNIC,
+  getAllRegistrations
 } = require("./admin.service");
 const jwt = require("jsonwebtoken");
 const XLSX = require('xlsx');
@@ -1547,6 +1551,45 @@ module.exports = {
     }
   },
 
+  checkPromotedStudentByCNIC: async (req, res) => {
+    try {
+      const body = req.body;
+      console.log("body.b_form", body.b_form)
+      const isBformExist = await new Promise((resolve, reject) => {
+        checkPromotedStudentByCNIC(body.b_form, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+      if (isBformExist.length !== 0) {
+        return res.json({
+          code: 403,
+          status: false,
+          message: "This B-Form/CNIC Number is promoted already.",
+          data: isBformExist
+        });
+      }
+      console.log("isBformExist", isBformExist)
+      return res.json({
+        code: 200,
+        status: true,
+        message: "This B-Form/CNIC Number is not promoted already."
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
   getRegistrations: async (req, res) => {
     try {
       // Pagination parameters
@@ -1670,6 +1713,41 @@ module.exports = {
       }
       console.log("isBformExist", isBformExist)
 
+      const registration = await new Promise((resolve, reject) => {
+        getAllRegistrations((err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+
+      console.log("registration", registration)
+      console.log("registration.lenght", registration.length)
+
+      let count = registration.length + 1;
+
+      var rollNumber;
+      if(count > 99){
+        rollNumber = `TEL-${count}`;
+      } else if (count > 9){
+        rollNumber = `TEL-0${count}`;
+      } else {
+        rollNumber = `TEL-00${count}`;
+      }
+      
+      console.log("rollNumber", rollNumber);
+
+      var testCenter = "Hasan Academy Secondary Campus";
+      if (count > 100){
+        testCenter = "Hasan Academy Primary Campus";
+      }
+
+      body.test_center = testCenter;
+      body.roll_number = rollNumber;
+
+      // Here we need to generate Roll number E-001
       const results = await new Promise((resolve, reject) => {
         registerStudent(body, blocked, (err, results) => {
           if (err) {
@@ -1886,6 +1964,62 @@ module.exports = {
           code: 400,
           status: false,
           message: "Failed to get Blocked Registrations",
+          data: []
+        });
+      }
+
+      return res.json({
+        code: 200,
+        status: true,
+        message: "Data found",
+        data: results,
+        totalPages: totalPages
+      });
+    } catch (error) {
+      console.log(error);
+      // Handle the error appropriately
+      return res.json({
+        code: 500,
+        status: false,
+        message: "An error occurred",
+        data: [],
+      });
+    }
+  },
+
+  getPromotedStudents: async (req, res) => {
+    try {
+      // Pagination parameters
+      const { page = 1, limit = 100, status = null, group_name = null, year = null } = req.query;
+      const offset = (page - 1) * limit;
+
+      const countResults = await new Promise((resolve, reject) => {
+        countPromotedStudents({ status, group_name, year }, (err, count) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(count);
+          }
+        });
+      });
+
+      const totalPages = Math.ceil(countResults / limit);
+
+      const results = await new Promise((resolve, reject) => {
+        getPromotedStudents({ offset, limit, status, group_name, year }, (err, results) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+
+      if (results.length === 0) {
+        return res.json({
+          code: 400,
+          status: false,
+          message: "Failed to get Promoted Students",
           data: []
         });
       }

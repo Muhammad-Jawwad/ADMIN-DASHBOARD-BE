@@ -476,4 +476,12 @@ module.exports = {
                 return true;
             }), handleValidationErrors,
     ],
+
+    validateCheckPromotedStudents: [
+        body("b_form").notEmpty().withMessage("B-Form/CNIC Number is required")
+            .isString().withMessage("B-Form/CNIC Number must be a string")
+            .matches(/^\d{13}$/).withMessage("Invalid B-Form/CNIC Number format. It should be a 13-digit number without dashes."),
+        handleValidationErrors,
+    ],
+
 };

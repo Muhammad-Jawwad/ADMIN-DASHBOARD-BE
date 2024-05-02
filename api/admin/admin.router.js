@@ -14,7 +14,8 @@ const {
     validateByType,
     validateStudentRegistration,
     validateUpdateRegistration,
-    validateUpdateRegistrationAppearence
+    validateUpdateRegistrationAppearence,
+    validateCheckPromotedStudents
 } = require("../../util/adminInputValidation");
 const {
     getRegisteredStudents,
@@ -63,6 +64,8 @@ const {
     getBlockedRegistrationById,
     updateBlockedRegistration,
     updateBlockedRegistrationAppearence,
+    getPromotedStudents,
+    checkPromotedStudentByCNIC,
 } = require("./admin.controller");
 const router = require("express").Router();
 const adminAuthenticateToken = require("../../auth/admin_token_validation");
@@ -238,10 +241,17 @@ router.patch("/updateRegistration",
     validateUpdateRegistration,
     updateRegistration
 );
+// Blocked students
+router.get("/getBlockedRegistrations", getBlockedRegistrations);
 
+// Promoted students
+router.get("/getPromotedStudents", getPromotedStudents);
+router.post("/checkPromotedStudent",
+    validateCheckPromotedStudents,
+    checkPromotedStudentByCNIC
+);
 
 // Not in use right now changes required
-router.get("/getBlockedRegistrations", getBlockedRegistrations);
 router.post("/addBlockedStudent",
     validateStudentRegistration,
     addBlockedStudent
