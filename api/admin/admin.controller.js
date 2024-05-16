@@ -1740,7 +1740,10 @@ module.exports = {
       console.log("rollNumber", rollNumber);
 
       var testCenter = "Hasan Academy Secondary Campus";
-      if (count > 100){
+      
+      if (count > 200){
+        testCenter = "Young Citizen Model School";
+      } else if (count > 100) {
         testCenter = "Hasan Academy Primary Campus";
       }
 

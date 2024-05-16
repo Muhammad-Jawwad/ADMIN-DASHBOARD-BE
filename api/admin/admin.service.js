@@ -655,6 +655,9 @@ LEFT JOIN
         if (studentClass) query += ` AND class = '${studentClass}'`;
         if (group_name) query += ` AND group_name = '${group_name}'`;
         if (year) query += ` AND year = '${year}'`;
+        
+        // Sorting
+        query += ` ORDER BY id DESC`;
 
         // Pagination
         query += ` LIMIT ${limit} OFFSET ${offset}`;
