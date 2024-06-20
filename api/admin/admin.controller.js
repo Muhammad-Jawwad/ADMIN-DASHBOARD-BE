@@ -1593,11 +1593,11 @@ module.exports = {
   getRegistrations: async (req, res) => {
     try {
       // Pagination parameters
-      const { page = 1, limit = 100, status = null, group_name = null, year = null } = req.query;
+      const { page = 1, limit = 100, status = null, group_name = null, year = null, studentClass= null } = req.query;
       const offset = (page - 1) * limit;
 
       const countResults = await new Promise((resolve, reject) => {
-        countRegistrations({ status, group_name, year }, (err, count) => {
+        countRegistrations({ status, group_name, year, studentClass }, (err, count) => {
           if (err) {
             reject(err);
           } else {
@@ -1609,7 +1609,7 @@ module.exports = {
       const totalPages = Math.ceil(countResults / limit);
 
       const results = await new Promise((resolve, reject) => {
-        getRegistrations({ offset, limit, status, group_name, year }, (err, results) => {
+        getRegistrations({ offset, limit, status, studentClass, group_name, year }, (err, results) => {
           if (err) {
             reject(err);
           } else {
@@ -1741,14 +1741,16 @@ module.exports = {
 
       var testCenter = "Hasan Academy Secondary Campus";
       
-      if (count > 200){
-        testCenter = "Young Citizen Model School";
-      } else if (count > 100) {
-        testCenter = "Hasan Academy Primary Campus";
-      }
+      // if (count > 200){
+      //   testCenter = "Young Citizen Model School";
+      // } else if (count > 100) {
+      //   testCenter = "Hasan Academy Primary Campus";
+      // }
 
       body.test_center = testCenter;
       body.roll_number = rollNumber;
+      body.test_time = "06:00 PM - 08:00 PM";
+      body.test_date = "5th-July-2024";
 
       // Here we need to generate Roll number E-001
       const results = await new Promise((resolve, reject) => {

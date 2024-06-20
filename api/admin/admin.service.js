@@ -682,12 +682,13 @@ LEFT JOIN
         );
     },
 
-    countRegistrations: ({ status, group_name, year }, callBack) => {
+    countRegistrations: ({ status, group_name, year, studentClass }, callBack) => {
         let query = `SELECT COUNT(*) AS count FROM registration WHERE 1=1`;
 
         // Filter conditions
         if (status) query += ` AND status = '${status}'`;
         if (group_name) query += ` AND group_name = '${group_name}'`;
+        if (studentClass) query += ` AND class = '${studentClass}'`;
         if (year) query += ` AND year = '${year}'`;
 
         pool.query(query, [], (error, results, fields) => {
@@ -778,9 +779,11 @@ LEFT JOIN
                 description, 
                 blocked,
                 roll_number,
+                test_time,
+                test_date,
                 test_center
             ) 
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
             [
                 data.full_name,
                 data.b_form,
@@ -812,6 +815,8 @@ LEFT JOIN
                 data.description,
                 blocked,
                 data.roll_number,
+                data.test_time,
+                data.test_date,
                 data.test_center,
             ],
             (error, results, fields) => {
